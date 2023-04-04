@@ -1,6 +1,6 @@
 <?php
 
-require_once "./Conexion.php";
+require_once "Conexion.php";
 
 //MODELO = CONTIENE LA LÓGICA
 //extends : HERENCIA (POO) en PHP
@@ -19,14 +19,14 @@ class Curso extends Conexion{
   public function listarCursos(){
     try{
       // 1. Preparamos la consulta
-      $consulta = $this->accesoBD->prepare("CALL spu_cursos_listar()")
+      $consulta = $this->accesoBD->prepare("CALL spu_cursos_listar()");
       // 2. Ejecutamos la consulta
       $consulta->execute();
       // 3. Devolvemos el resultado (array asociativo)
       return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
     catch(Exception $e){
-      die($e->getMessage())
+      die($e->getMessage());
     }
   }
 
@@ -35,7 +35,7 @@ class Curso extends Conexion{
 
     }
     catch(Exception $e){
-      die($e->getMessage())
+      die($e->getMessage());
     }
   }  
   
@@ -45,7 +45,7 @@ class Curso extends Conexion{
 
     }
     catch(Exception $e){
-      die($e->getMessage())
+      die($e->getMessage());
     }
   }
 
@@ -54,7 +54,7 @@ class Curso extends Conexion{
 
     }
     catch(Exception $e){
-      die($e->getMessage())
+      die($e->getMessage());
     }
   }
 
