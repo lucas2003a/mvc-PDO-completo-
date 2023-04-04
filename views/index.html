@@ -180,6 +180,28 @@
       // Eventos
       $("#guardar-curso").click(registrarCurso);
 
+      // Al pulsar click sobre el botón ROJO, se elimine el registro
+      // Detectaremos eventos de los objetos reados de manera asincrona en...
+      $("#tabla-cursos tbody").on("click", ".eliminar", function (){
+        const idcursoEliminar = $(this).data("idcurso");
+        if (confirm("¿Esta seguro de proceder?")){
+          $.ajax({
+            url: '../controllers/curso.controller.php',
+            type: 'POST',
+            data: {
+              operacion : 'eliminar',
+              idcurso   : idcursoEliminar
+            },
+            success: function(result){
+              if (result == ""){
+                mostrarCursos();
+              }
+            }
+          });
+        }
+        // console.log(idcurso);
+      });
+
       // Ejecución automatica
       mostrarCursos();
 
