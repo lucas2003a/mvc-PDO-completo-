@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (isset($_SESSION['login']) && $_SESSION['login']){
+  header('Location:views/index.php');
+}
+
+?>
 <!doctype html>
 <html lang="es">
 
@@ -37,7 +45,7 @@
             </form>
           </div>
           <div class="card-footer text-muted">
-            <button class="btn btn-sm btn-success">Iniciar sesión</button>
+            <button type="button" class="btn btn-sm btn-success" id="iniciar-sesion">Iniciar sesión</button>
           </div>
         </div>
         <!-- FIN DE CARD -->
@@ -46,9 +54,42 @@
     </div>
   </div>
 
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+  <script>
+    $(document).ready(function (){
 
+      function iniciarSesion(){
+        const usuario = $("#usuario").val();
+        const clave = $("#clave").val();
 
+        if (usuario != "" && clave != ""){
+          $.ajax({
+            url: 'controllers/usuario.controller.php',
+            type: 'POST',
+            data: {
+              operacion     : 'login',
+              nombreusuario : usuario,
+              claveIngresada: clave
+            },
+            dataType: 'JSON',
+            success: function (result){
+              console.log(result);
+              if (result["status"]){
+                window.location.href = "views/index.php";
+              }else{
+                alert(result["mensaje"]);
+              }
+            }
+          });
+        }
+      }
+
+      $("#iniciar-sesion").click(iniciarSesion);
+
+    })
+  </script>
 
 </body>
 
