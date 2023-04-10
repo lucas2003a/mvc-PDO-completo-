@@ -65,3 +65,13 @@ CALL spu_cursos_listar();
 
 
 
+-- Lunes 10 de Abril 2023
+DELIMITER $$
+CREATE PROCEDURE spu_cursos_recuperar_id(IN _idcurso INT)
+BEGIN
+	SELECT * FROM cursos WHERE idcurso = _curso;
+END $$
+
+CALL spu_cursos_recuperar_id(3);
+
+
