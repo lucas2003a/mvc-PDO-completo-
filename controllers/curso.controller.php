@@ -44,6 +44,7 @@ if (isset($_POST['operacion'])){
   if ($_POST['operacion']  == 'registrar'){
 
     // PASO 1: Recoger los datos que nos envia la vista (FORM, utilizando AJAX)
+    // $_POST: Esto es lo que se nos envia desde FORM
     $datosForm = [
       "nombrecurso"   => $_POST['nombrecurso'],
       "especialidad"  => $_POST['especialidad'],
@@ -63,5 +64,21 @@ if (isset($_POST['operacion'])){
   if ($_POST['operacion'] == 'obtenercurso'){
     $registro = $curso->getCurso($_POST['idcurso']);
     echo json_encode($registro);
+  }
+
+  if ($_POST['operacion'] == 'actualizar'){
+        // PASO 1: Recoger los datos que nos envia la vista (FORM, utilizando AJAX)
+        $datosForm = [
+          "idcurso"       => $_POST['idcurso'],
+          "nombrecurso"   => $_POST['nombrecurso'],
+          "especialidad"  => $_POST['especialidad'],
+          "complejidad"   => $_POST['complejidad'],
+          "fechainicio"   => $_POST['fechainicio'],
+          "precio"        => $_POST['precio']
+        ];
+    
+        // PASO 2: Enviar el arreglo como parametro del metodo ACTUALIZAR
+        $curso->actualizarCurso($datosForm);
+    
   }
 }
