@@ -42,44 +42,32 @@ if (isset($_POST['operacion'])){
 
   }
 
-}
-
-
-if (isset($_GET['operacion'])){
-
-  if ($_GET['operacion'] == 'finalizar'){
-    session_destroy();
-    session_unset();
-    header('Location:../index.php');
-  }
-
-
-
-if ($_POST['operacion'] == 'listar'){
-  $datosObtenidos = $usuario->listarUsuarios();
-  if ($datosObtenidos){
-    $numeroFila = 1;
-    foreach($datosObtenidos as $usuario){
-      echo "
-        <tr>
-          <td>{$numeroFila}</td>
-          <td>{$usuario['nombreusuario']}</td>
-          <td>{$usuario['claveacceso']}</td>
-          <td>{$usuario['apellidos']}</td>
-          <td>{$usuario['nombres']}</td>
-          <td>{$usuario['nivelacceso']}</td>
-          <td>
-            <a href='#' data-idusuario='{$usuario['idusuario']}' class='btn btn-danger btn-sm eliminar'><i class='bi bi-trash3'></i></a>
-            <a href='#' data-idusuario='{$usuario['idusuario']}' class='btn btn-warning btn-sm editar'><i class='bi bi-pencil-square'></i></a>
-          </td>
-       
-        </tr>
-      ";
-      $numeroFila++;
+  // CRUD DE USUARIOS
+  if ($_POST['operacion'] == 'listar'){
+    $datosObtenidos = $usuario->listarUsuarios();
+    if ($datosObtenidos){
+      $numeroFila = 1;
+      foreach($datosObtenidos as $usuario){
+        echo "
+          <tr>
+            <td>{$numeroFila}</td>
+            <td>{$usuario['nombreusuario']}</td>
+            <td>{$usuario['apellidos']}</td>
+            <td>{$usuario['nombres']}</td>
+            <td>{$usuario['nivelacceso']}</td>
+            <td>{$usuario['fecharegistro']}</td>
+            <td>
+              <a href='#' data-idusuario='{$usuario['idusuario']}' class='btn btn-danger btn-sm eliminar'><i class='bi bi-trash3'></i></a>
+              <a href='#' data-idusuario='{$usuario['idusuario']}' class='btn btn-warning btn-sm editar'><i class='bi bi-pencil-square'></i></a>
+            </td>
+         
+          </tr>
+        ";
+        $numeroFila++;
+      }
     }
   }
-}
-
+  
   if ($_POST['operacion']  == 'registrar'){
 
     $datosForm = [
@@ -97,6 +85,11 @@ if ($_POST['operacion'] == 'listar'){
     $usuario->eliminarUsuario($_POST['idusuario']);
   }
 
+  if ($_POST['operacion'] == 'obtenerusuario'){
+    $registro = $usuario->getUsuario($_POST['idusuario']);
+    echo json_encode($registro);
+  }
+
   if ($_POST['operacion'] == 'actualizar'){
         $datosForm = [
           "idusuario"       => $_POST['idusuario'],
@@ -109,5 +102,16 @@ if ($_POST['operacion'] == 'listar'){
     
         $usuario->actualizarUsuario($datosForm);
     
+  }
+
+}
+
+
+if (isset($_GET['operacion'])){
+
+  if ($_GET['operacion'] == 'finalizar'){
+    session_destroy();
+    session_unset();
+    header('Location:../index.php');
   }
 }

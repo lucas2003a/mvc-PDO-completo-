@@ -156,10 +156,10 @@ CREATE PROCEDURE spu_usuarios_listar()
 BEGIN
 	SELECT 	idusuario,
 		nombreusuario,
-		claveacceso,
 		apellidos,
 		nombres,
-		nivelacceso
+		nivelacceso,
+		fecharegistro
 	FROM usuarios
 	WHERE estado = '1'
 	ORDER BY idusuario DESC;
@@ -209,7 +209,7 @@ BEGIN
 	WHERE idusuario = _idusuario;
 END $$
 
-CALL spu_usuarios_actualizar(4, 'Yisus', 'Abril', 'Castillo Marquez', 'Jesús', 'I');
+CALL spu_usuarios_actualizar(7, 'Yisus', 'Abril', 'Castillo Marquez', 'Jesús', 'I');
 CALL spu_usuarios_listar;
 
 
@@ -223,5 +223,13 @@ END $$
 
 CALL spu_usuarios_eliminar(3);
 
+
+DELIMITER $$
+CREATE PROCEDURE spu_usuarios_recuperar_id(IN _idusuario INT)
+BEGIN
+	SELECT * FROM usuarios WHERE idusuario = _idusuario;
+END $$
+
+CALL spu_usuarios_recuperar_id(2);
 
 

@@ -42,21 +42,21 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
         <table class="table table-sm table-striped" id="tabla-usuarios">
           <colgroup>
             <col width="5%">
+            <col width="15%">
             <col width="20%">
-            <col width="30%">
-            <col width="15%">
-            <col width="15%">
-            <col width="5%">
+            <col width="20%">
+            <col width="10%">
+            <col width="20%">
             <col width="10%">
           </colgroup>
           <thead>
             <tr>
               <th>#</th>
               <th>Usuario</th>
-              <th>Clave</th>
               <th>Apellidos</th>
               <th>Nombres</th>
               <th>Nv.Acceso</th>
+              <th>Fecha de Registro</th>
               <th>Operaciones</th>
             </tr>
           </thead>
@@ -67,6 +67,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
         </table>
       </div>
       <div class="card-footer text-end">
+        <a href="../views/index.php" style="text-decoration: none;" class="btn btn-success btn-sm"><i class="bi bi-arrow-bar-left"></i> Ir a la tabla Cursos</a>
         <a href="../controllers/usuario.controller.php?operacion=finalizar" style="text-decoration: none;" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
     </div>
     </div>
@@ -86,12 +87,12 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
         <div class="modal-body">
           <form id="formulario-usuarios" autocomplete="off">
             <div class="mb-3">
-              <label for="usuario" class="form-label">Usuario</label>
-              <input type="text" class="form-control form-control-sm" id="usuario">
+              <label for="nombreusuario" class="form-label">Usuario</label>
+              <input type="text" class="form-control form-control-sm" id="nombreusuario">
             </div>
             <div class="mb-3">
-              <label for="clave" class="form-label">Clave</label>
-              <input type="password" class="form-control form-control-sm" id="clave">
+              <label for="claveacceso" class="form-label">Clave</label>
+              <input type="password" class="form-control form-control-sm" id="claveacceso">
             </div>
             <div class="mb-3">
               <label for="apellidos" class="form-label">Apellidos</label>
@@ -100,6 +101,14 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
             <div class="mb-3">
               <label for="nombres" class="form-label">Nombres</label>
               <input type="text" class="form-control form-control-sm" id="nombres">
+            </div>
+            <div class="mb-3">
+              <label for="nivelacceso" class="form-label">Nivel de Acceso</label>
+              <select id="nivelacceso" class="form-select form-select-sm">
+                <option value="">Seleccione</option>
+                <option value="A">Administrador</option>
+                <option value="I">Invitado</option>
+              </select>
             </div>
           </form>
         </div>
@@ -146,10 +155,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
       }
 
       function registrarusuario(){
-        // Pendiente de validar...
         if (confirm("¿Está seguro de salvar los datos?")){
-
-          // Crear un objeto conteniendo los datos a guardar
           let datos = {
               operacion     : 'registrar',
               idusuario     : idusuarioactualizar,
@@ -169,13 +175,9 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
             data: datos,
             success: function(result){
               if (result == ""){
-                // Reiniciar el formulario
                 $("#formulario-usuarios")[0].reset();
-
-                // Actualizar la tabla
                 mostrarusuarios();
 
-                // Cerrar el modal
                 $("#modal-registro-usuarios").modal('hide');
               }
             }
@@ -213,32 +215,27 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
         }
       });
 
-      // Detectar clicck en EDITAR (asíncrono)
-      // on() permite gestionar-controlar eventos
       $("#tabla-usuarios tbody").on("click", ".editar", function(){
-        const idusuarioeditar = $(this).data("idusuario");
-
+        const idusuarioEditar = $(this).data("idusuario");
         $.ajax({
           url: '../controllers/usuario.controller.php',
           type: 'POST',
           data: {
             operacion : 'obtenerusuario',
-            idusuario   : idusuarioeditar
+            idusuario : idusuarioEditar
           },
           dataType: 'JSON',
           success: function(result){
             console.log(result);
-
-            // Configurar bandera
             datosNuevos = false;
 
             // Retornamos los valores a los controles de FORM
             idusuarioactualizar = result['idusuario'];
             $("#nombreusuario").val(result["nombreusuario"]);
-            $("#especialidad").val(result["especialidad"]);
-            $("#complejidad").val(result["complejidad"]);
-            $("#fechainicio").val(result["fechainicio"]);
-            $("#precio").val(result["precio"]);
+            $("#claveacceso").val(result["claveacceso"]);
+            $("#apellidos").val(result["apellidos"]);
+            $("#nombres").val(result["nombres"]);
+            $("#nivelacceso").val(result["nivelacceso"]);
 
             // Cambiar el titulo del modal
             $("#modal-titulo").html("Actualizar datos de usuario");

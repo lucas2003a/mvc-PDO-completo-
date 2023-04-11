@@ -67,6 +67,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
         </table>
       </div>
       <div class="card-footer text-end">
+        <a href="../views/users.php" style="text-decoration: none;" class="btn btn-success btn-sm"><i class="bi bi-arrow-bar-right"></i> Ir a la tabla Usuarios</a>
         <a href="../controllers/usuario.controller.php?operacion=finalizar" style="text-decoration: none;" class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
     </div>
     </div>

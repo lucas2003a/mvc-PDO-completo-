@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Conexion.php';
+require_once "Conexion.php";
 
 class Usuario extends Conexion{
 
@@ -59,16 +59,28 @@ class Usuario extends Conexion{
     }
   }
 
+  public function getUsuario($idusuario = 0){
+    try{
+      $consulta = $this->accesoBD->prepare("CALL spu_usuarios_recuperar_id(?)");
+      $consulta->execute(array($idusuario));
+      return $consulta->fetch(PDO::FETCH_ASSOC);
+    }
+    catch(Exception $e){
+      die($e->getMessage());
+    }
+  }
+
   public function actualizarUsuario($datos = []){
     try{
-        $consulta = $this->accesoBD->prepare("CALL spu_usuarios_actualizar(?,?,?,?,?)");
+        $consulta = $this->accesoBD->prepare("CALL spu_usuarios_actualizar(?,?,?,?,?,?)");
         $consulta->execute(
           array(
             $datos["idusuario"],
             $datos["nombreusuario"],
             $datos["claveacceso"],
             $datos["apellidos"],
-            $datos["nombres"]
+            $datos["nombres"],
+            $datos["nivelacceso"]
             )
         );
     }
