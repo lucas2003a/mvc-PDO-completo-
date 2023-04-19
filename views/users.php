@@ -91,7 +91,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
               <input type="text" class="form-control form-control-sm" id="nombreusuario">
             </div>
             <div class="mb-3">
-              <label for="claveacceso" class="form-label">Clave</label>
+              <label for="claveacceso" class="form-label" id="label">Clave</label>
               <input type="password" class="form-control form-control-sm" id="claveacceso">
             </div>
             <div class="mb-3">
@@ -135,7 +135,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
   <!-- jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-  <script>
+    <script>
     $(document).ready(function(){
 
       // Variables de ámbito general (accesibles)
@@ -161,6 +161,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
               idusuario     : idusuarioactualizar,
               nombreusuario : $("#nombreusuario").val(),
               claveacceso   : $("#claveacceso").val(),
+              nivelacceso   : $("#nivelacceso").val(),
               apellidos     : $("#apellidos").val(),
               nombres       : $("#nombres").val()
             };
@@ -232,10 +233,10 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
             // Retornamos los valores a los controles de FORM
             idusuarioactualizar = result['idusuario'];
             $("#nombreusuario").val(result["nombreusuario"]);
-            $("#claveacceso").val(result["claveacceso"]);
             $("#apellidos").val(result["apellidos"]);
             $("#nombres").val(result["nombres"]);
             $("#nivelacceso").val(result["nivelacceso"]);
+            $("#claveacceso").val(result["claveacceso"]);
 
             // Cambiar el titulo del modal
             $("#modal-titulo").html("Actualizar datos de usuario");

@@ -34,14 +34,15 @@ class Usuario extends Conexion{
 
   public function registrarUsuario($datos = []){
     try{
-      $consulta = $this->accesoBD->prepare("CALL spu_usuarios_registrar(?,?,?,?)");
+      $consulta = $this->accesoBD->prepare("CALL spu_usuarios_registrar(?,?,?,?,?)");
       $consulta->execute(
         array(
           $datos["nombreusuario"],
           $datos["claveacceso"],
+          $datos["nivelacceso"],
           $datos["apellidos"],
           $datos["nombres"]
-        )
+          )
       );
     }
     catch(Exception $e){

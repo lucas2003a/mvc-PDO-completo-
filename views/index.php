@@ -74,7 +74,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] == false){
   </div>
   <!-- Fin de container -->
 
-
+  
   <!-- Zona de Modales -->
   <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
   <div class="modal fade" id="modal-registro-cursos" tabindex="-1"  role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">

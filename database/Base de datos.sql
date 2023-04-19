@@ -118,7 +118,7 @@ CREATE TABLE usuarios
 )ENGINE = INNODB;
 
 INSERT INTO usuarios (nombreusuario,claveacceso,apellidos,nombres) VALUES
-	('ElRandom', '123456', 'Villegas Salazar','Luis'),
+	('Ana', '123456', 'Sotelo Cardenas','Ana'),
 	('Jhon', '123456', 'Francia Minaya', 'Jhon Edward');
 
 SELECT * FROM usuarios;
@@ -146,7 +146,7 @@ BEGIN
 	WHERE nombreusuario = _nombreusuario AND estado = '1';
 END $$
 
-CALL spu_usuarios_login('elrandom');
+CALL spu_usuarios_login('Ana');
 
 
 -- CRUD DE USUARIOS
@@ -166,27 +166,27 @@ BEGIN
 END $$
 
 CALL spu_usuarios_listar();
-
 -- REGISTRAR USUARIOS
 DELIMITER $$
 CREATE PROCEDURE spu_usuarios_registrar(
 	IN _nombreusuario	VARCHAR(30),
 	IN _claveacceso	VARCHAR(90),
+	IN _nivelacceso	CHAR(1),
 	IN _apellidos		VARCHAR(30),
-	IN _nombres			VARCHAR(30)
+	IN _nombres		VARCHAR(30)
+
 )
 BEGIN
-	INSERT INTO usuarios(nombreusuario,claveacceso,apellidos,nombres) VALUES
-		(_nombreusuario,_claveacceso,_apellidos,_nombres);
+	INSERT INTO usuarios(nombreusuario,claveacceso,nivelacceso, apellidos,nombres) VALUES
+		(_nombreusuario,_claveacceso,_nivelacceso,_apellidos,_nombres);
 END $$
 
-CALL spu_usuarios_registrar('Redox','Origen','Castillo Marquez','Jesús');
+CALL spu_usuarios_registrar('Re9dyt4ox','Origen','A','Castillo Marquez','Jesús');
 CALL spu_usuarios_listar();
 
 
 
 -- ACTUALIZAR O MODIFICAR USUARIOS
-DROP PROCEDURE spu_usuarios_actualizar
 DELIMITER $$
 CREATE PROCEDURE spu_usuarios_actualizar
 (
@@ -209,7 +209,7 @@ BEGIN
 	WHERE idusuario = _idusuario;
 END $$
 
-CALL spu_usuarios_actualizar(7, 'Yisus', 'Abril', 'Castillo Marquez', 'Jesús', 'I');
+-- CALL spu_usuarios_actualizar(7, 'Yisus', 'Abril', 'Castillo Marquez', 'Jesús', 'I');
 CALL spu_usuarios_listar;
 
 
@@ -223,13 +223,12 @@ END $$
 
 CALL spu_usuarios_eliminar(3);
 
-
 DELIMITER $$
 CREATE PROCEDURE spu_usuarios_recuperar_id(IN _idusuario INT)
 BEGIN
 	SELECT * FROM usuarios WHERE idusuario = _idusuario;
 END $$
 
-CALL spu_usuarios_recuperar_id(2);
+CALL spu_usuarios_recuperar_id(1);
 
 

@@ -71,10 +71,11 @@ if (isset($_POST['operacion'])){
   if ($_POST['operacion']  == 'registrar'){
 
     $datosForm = [
-      "nombreusuario"   => $_POST['nombreusuario'],
-      "claveacceso"     => $_POST['claveacceso'],
-      "apellidos"       => $_POST['apellidos'],
-      "nombres"         => $_POST['nombres']
+      "nombreusuario"     => $_POST['nombreusuario'],
+      "claveacceso"       => $_POST['claveacceso'],
+      "nivelacceso"       => $_POST['nivelacceso'],
+      "apellidos"         => $_POST['apellidos'],
+      "nombres"           => $_POST['nombres']
     ];
 
     $usuario->registrarUsuario($datosForm);
